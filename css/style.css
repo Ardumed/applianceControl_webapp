@@ -1151,7 +1151,7 @@ ul.location li:nth-child(2) {
     position: absolute;
     top: 50%;
     left: 0;
-    width: 44%;
+    width: 36%;
     height: 1px;
     background: #545556;
 }
@@ -1160,7 +1160,7 @@ ul.location li:nth-child(2) {
     position: absolute;
     top: 50%;
     right: 0;
-    width: 44%;
+    width: 36%;
     height: 1px;
     background: #545556;
 }
