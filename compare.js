@@ -89,19 +89,7 @@ var continuousDataNotifier = function(i) {
             db.close();
             console.log(result1);
             // console.log(result2);
-            var simulation = result1[0][0];
-            var userObject = result1[1][0];
-            var simulationTime = new Date(simulation.datetime);
-            var fromdate = result1[1][0].from;
-            var todate = result1[1][0].to;
-            // morning
-            var dateInRange = (fromdate <= simulationTime && simulationTime <= todate);
-            // console.log(dateInRange);
-            var simulationHour = simulationTime.getHours();
-            var isMorning = (simulationHour >= 8 && simulationHour <= 10);
-            var isNoon = (simulationHour >= 13 && simulationHour <= 14);
-            var isNight = (simulationHour >= 20 && simulationHour <= 22);
-            console.log(isMorning, isNoon, isNight);
+            var applianceObj = result1[0][0];
 
             var led1 = new five.Led('A0');
             var led2 = new five.Led('A1');
@@ -109,64 +97,7 @@ var continuousDataNotifier = function(i) {
             led1.off();
             led2.off();
             led3.off();
-            if (dateInRange) {
-                console.log(isMorning);
-                if (isMorning) {
-                    if (userObject.med0morning) {
-                        led1.on();
-                    } else {
-                        led1.off();
-                    }
 
-                    if (userObject.med1morning) {
-                        led2.on();
-                    } else {
-                        led2.off();
-                    }
-
-                    if (userObject.med2morning) {
-                        led3.on();
-                    } else {
-                        led3.off();
-                    }
-                } else if (isNoon) {
-                    if (userObject.med0noon) {
-                        led1.on();
-                    } else {
-                        led1.off();
-                    }
-
-                    if (userObject.med1noon) {
-                        led2.on();
-                    } else {
-                        led2.off();
-                    }
-
-                    if (userObject.med2noon) {
-                        led3.on();
-                    } else {
-                        led3.off();
-                    }
-                } else if (isNight) {
-                    if (userObject.med0night) {
-                        led1.on();
-                    } else {
-                        led1.off();
-                    }
-
-                    if (userObject.med1night) {
-                        led2.on();
-                    } else {
-                        led2.off();
-                    }
-
-                    if (userObject.med2night) {
-                        led3.on();
-                    } else {
-                        led3.off();
-                    }
-                }
-            }
         }).then(function(result) {
             console.log(result);
         });
