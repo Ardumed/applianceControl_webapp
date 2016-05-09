@@ -3,8 +3,9 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
+var mongojs = require('mongojs');
 var assert = require('assert');
-var url = 'mongodb://admin:nON6zS3uWa99wtGS@SG-ardumed-7417.servers.mongodirector.com:27017/iot';
+var url = 'mongodb://admin:nON6zS3uWa99wtGS@SG-ardumed-7417.servers.mongodirector.com:27017/admin';
 
 
 
@@ -29,6 +30,11 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
+app.get('/currentstatus', function(req, res) {
+    var dataObject = getApplianceDataObject();
+    console.log(dataObject);
+    res.send(dataObject);
+});
 
 app.post('/setstatus', function(req, res) {
     getDetails(req);
@@ -63,10 +69,10 @@ var getDetails = function(req) {
 
 
     var insertDocument = function(db, callback) {
-        db.collection('control').insertOne(det, function(err, result) {
+        db.collection('user').insertOne(det, function(err, result) {
             assert.equal(err, null);
             console.log(det);
-            console.log("Inserted a document into the iot collection.");
+            console.log("Inserted a document into the user collection.");
             callback();
         });
     };
@@ -103,6 +109,28 @@ var simulationSave = function(req) {
     });
 
 };
+
+var getApplianceDataObject = function() {
+    url = 'mongodb://admin:nON6zS3uWa99wtGS@SG-ardumed-7417.servers.mongodirector.com:27017/admin';
+    db = mongojs(url, ['control']);
+    var dbPromise1 = new Promise(function(resolve, reject) {
+        db.control.find().sort({
+            $natural: -1
+        }).limit(1, (function(err, docs) {
+            if (err) {
+                return reject(err);
+            }
+            resolve(docs);
+        }));
+    });
+    var applianceObject = {};
+    return Promise.all([dbPromise1])
+        .then(function(result1) {
+            console.log(result1);
+            applianceObject = result1;
+            db.close();
+        });
+}
 
 /**
  * - POST : set prescription

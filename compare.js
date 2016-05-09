@@ -166,41 +166,6 @@ var continuousDataNotifier = function(i) {
                         led3.off();
                     }
                 }
-
-                //
-                //   if(userObject.med0){
-                //     led1.off();
-                //     if(isMorning && userObject.med0morning)
-                //       {led1.on();}
-                //     else if (isNoon && userObject.med0noon) {
-                //       {led1.on();}
-                //     }
-                //     else if (isNight && userObject.med0night) {
-                //       {led1.on();}
-                //     }
-                //   }
-                //   else if(userObject.med1){
-                //     led2.off();
-                //     if(isMorning && userObject.med1morning)
-                //       {led2.on();}
-                //     else if (isNoon && userObject.med1noon) {
-                //       {led2.on();}
-                //     }
-                //     else if (isNight && userObject.med1night) {
-                //       {led2.on();}
-                //     }
-                //   }
-                //   else if(userObject.med2){
-                //     led3.off();
-                //     if(isMorning && userObject.med2morning)
-                //       {led3.on();}
-                //     else if (isNoon && userObject.med2noon) {
-                //       {led3.on();}
-                //     }
-                //     else if (isNight && userObject.med2night) {
-                //       {led3.on();}
-                //     }
-                //   }
             }
         }).then(function(result) {
             console.log(result);
