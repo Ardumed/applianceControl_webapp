@@ -39,11 +39,6 @@ app.get('/currentstatus', function(req, res) {
         console.log(docs);
         res.send(docs[0]);
     }));
-    // var object = Promise.all([dbPromise1])
-    //     .then(function(result1) {
-    //         db.close();
-    //         return result1;
-    //     });
 });
 
 app.post('/setstatus', function(req, res) {
@@ -118,25 +113,6 @@ var simulationSave = function(req) {
     });
 
 };
-
-var getApplianceDataObject = function() {
-    url = 'mongodb://admin:nON6zS3uWa99wtGS@SG-ardumed-7417.servers.mongodirector.com:27017/admin';
-    db = mongojs(url, ['control']);
-    var dataObject = db.control.find().sort({
-        $natural: -1
-    }).limit(1, (function(err, docs) {
-        console.log(docs);
-        return docs;
-    }));
-    console.log(dataObject);
-    // var object = Promise.all([dbPromise1])
-    //     .then(function(result1) {
-    //         db.close();
-    //         return result1;
-    //     });
-
-    return dataObject;
-}
 
 /**
  * - POST : set prescription
