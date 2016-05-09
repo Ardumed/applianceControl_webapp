@@ -32,7 +32,9 @@ app.get('/', function(req, res) {
 
 app.post('/setstatus', function(req, res) {
     getDetails(req);
-    res.sendFile(path.join(__dirname + '/simget.html'));
+    // res.sendFile(path.join(__dirname + '/simget.html'));
+    // var x = true;
+    res.sendFile(path.join(__dirname + '/index.html'));
 });
 
 app.get('/simulation', function(req, res) {
@@ -49,35 +51,16 @@ app.post('/simulation', function(req, res) {
 
 var getDetails = function(req) {
     var det = {};
-    det.name = req.body.patientName;
-    det.age = req.body.patientAge;
-    det.medNum = req.body.medicineNumber;
+    var appliances = ['light', 'fan', 'tv', 'footlight', 'nightlamp', 'ac', 'airPurifier', 'waterPurifier', 'geyser', 'chimney', 'fridge', 'washingMachine']
 
-    var fromDate = new Date(req.body.fromDate);
-    fromDate.setHours(0, 0, 0, 0);
-    det.from = fromDate;
+    for (var i = 0; i < appliances.length; i++) {
+        if (typeof(req.body[appliances[i]]) === "undefined") {
+            det[appliances[i]] = false;
+        } else {
+            det[appliances[i]] = true;
+        }
+    }
 
-    var toDate = new Date(req.body.toDate);
-    toDate.setHours(24, 0, 0, 0);
-    det.to = toDate;
-
-    det.med0 = req.body.medicineName1;
-    det.med0morning = req.body.morningCheckbox1;
-    det.med0noon = req.body.noonCheckbox1;
-    det.med0night = req.body.nightCheckbox1;
-    det.med0syrup = req.body.check1;
-
-    det.med1 = req.body.medicineName2;
-    det.med1morning = req.body.morningCheckbox2;
-    det.med1noon = req.body.noonCheckbox2;
-    det.med1night = req.body.nightCheckbox2;
-    det.med1syrup = req.body.check2;
-
-    det.med2 = req.body.medicineName3;
-    det.med2morning = req.body.morningCheckbox3;
-    det.med2noon = req.body.noonCheckbox3;
-    det.med2night = req.body.nightCheckbox3;
-    det.med2syrup = req.body.check3;
 
     var insertDocument = function(db, callback) {
         db.collection('control').insertOne(det, function(err, result) {
