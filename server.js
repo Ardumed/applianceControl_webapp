@@ -14,10 +14,10 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 }));
 
 // app.use('/bower_components', express.static(__dirname + '/bower_components'));
-app.use('/css', express.static(__dirname + '/www/css'));
-app.use('/fonts', express.static(__dirname + '/www/fonts/'));
-app.use('/images', express.static(__dirname + '/www/images/'));
-app.use('/js', express.static(__dirname + '/www/js/'));
+app.use('/css', express.static(__dirname + '/css'));
+app.use('/fonts', express.static(__dirname + '/fonts/'));
+app.use('/images', express.static(__dirname + '/images/'));
+app.use('/js', express.static(__dirname + '/js/'));
 //app.use(express.static(__dirname + '/src/login'));
 
 //app.get('/login', function (req, res) {
@@ -26,17 +26,17 @@ app.use('/js', express.static(__dirname + '/www/js/'));
 
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/www/index.html'));
+    res.sendFile(path.join(__dirname + '/index.html'));
 });
 
 
-app.post('/setprescription', function(req, res) {
+app.post('/setstatus', function(req, res) {
     getDetails(req);
-    res.sendFile(path.join(__dirname + '/www/simget.html'));
+    res.sendFile(path.join(__dirname + '/simget.html'));
 });
 
 app.get('/simulation', function(req, res) {
-    res.sendFile(path.join(__dirname + '/www/simget.html'));
+    res.sendFile(path.join(__dirname + '/simget.html'));
 });
 
 app.post('/simulation', function(req, res) {
@@ -44,7 +44,7 @@ app.post('/simulation', function(req, res) {
     // reply.date = req.body.date;
     // reply.time = req.body.time;
     simulationSave(req);
-    res.sendFile(path.join(__dirname + '/www/simget.html'));
+    res.sendFile(path.join(__dirname + '/simget.html'));
 });
 
 var getDetails = function(req) {
