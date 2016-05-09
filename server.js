@@ -31,13 +31,24 @@ app.get('/', function(req, res) {
 });
 
 app.get('/currentstatus', function(req, res) {
-    var dataObject = getApplianceDataObject();
-    console.log(dataObject);
-    res.send(dataObject);
+    url = 'mongodb://admin:nON6zS3uWa99wtGS@SG-ardumed-7417.servers.mongodirector.com:27017/admin';
+    db = mongojs(url, ['control']);
+    var dataObject = db.control.find().sort({
+        $natural: -1
+    }).limit(1, (function(err, docs) {
+        console.log(docs);
+        res.send(docs[0]);
+    }));
+    // var object = Promise.all([dbPromise1])
+    //     .then(function(result1) {
+    //         db.close();
+    //         return result1;
+    //     });
 });
 
 app.post('/setstatus', function(req, res) {
     getDetails(req);
+    // console.log(req);
     // res.sendFile(path.join(__dirname + '/simget.html'));
     // var x = true;
     res.sendFile(path.join(__dirname + '/index.html'));
@@ -58,7 +69,6 @@ app.post('/simulation', function(req, res) {
 var getDetails = function(req) {
     var det = {};
     var appliances = ['light', 'fan', 'tv', 'footlight', 'nightlamp', 'ac', 'airPurifier', 'waterPurifier', 'geyser', 'chimney', 'fridge', 'washingMachine']
-
     for (var i = 0; i < appliances.length; i++) {
         if (typeof(req.body[appliances[i]]) === "undefined") {
             det[appliances[i]] = false;
@@ -69,7 +79,7 @@ var getDetails = function(req) {
 
 
     var insertDocument = function(db, callback) {
-        db.collection('user').insertOne(det, function(err, result) {
+        db.collection('control').insertOne(det, function(err, result) {
             assert.equal(err, null);
             console.log(det);
             console.log("Inserted a document into the user collection.");
@@ -83,7 +93,6 @@ var getDetails = function(req) {
             db.close();
         });
     });
-
 };
 
 
@@ -113,23 +122,20 @@ var simulationSave = function(req) {
 var getApplianceDataObject = function() {
     url = 'mongodb://admin:nON6zS3uWa99wtGS@SG-ardumed-7417.servers.mongodirector.com:27017/admin';
     db = mongojs(url, ['control']);
-    var dbPromise1 = new Promise(function(resolve, reject) {
-        db.control.find().sort({
-            $natural: -1
-        }).limit(1, (function(err, docs) {
-            if (err) {
-                return reject(err);
-            }
-            resolve(docs);
-        }));
-    });
-    var applianceObject = {};
-    return Promise.all([dbPromise1])
-        .then(function(result1) {
-            console.log(result1);
-            applianceObject = result1;
-            db.close();
-        });
+    var dataObject = db.control.find().sort({
+        $natural: -1
+    }).limit(1, (function(err, docs) {
+        console.log(docs);
+        return docs;
+    }));
+    console.log(dataObject);
+    // var object = Promise.all([dbPromise1])
+    //     .then(function(result1) {
+    //         db.close();
+    //         return result1;
+    //     });
+
+    return dataObject;
 }
 
 /**
