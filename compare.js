@@ -58,11 +58,11 @@ var continuousDataNotifier = function(i) {
     if (i != 1) {
         return 0;
     }
-    url = 'mongodb://admin:nON6zS3uWa99wtGS@SG-ardumed-7417.servers.mongodirector.com:27017/iot';
-    db = mongojs(url, ['user', 'simulation']);
+    url = 'mongodb://admin:nON6zS3uWa99wtGS@SG-ardumed-7417.servers.mongodirector.com:27017/admin';
+    db = mongojs(url, ['control']);
 
     var dbPromise1 = new Promise(function(resolve, reject) {
-        db.simulation.find().sort({
+        db.control.find().sort({
             $natural: -1
         }).limit(1, (function(err, docs) {
             if (err) {
@@ -72,31 +72,31 @@ var continuousDataNotifier = function(i) {
         }));
     });
 
-    var dbPromise2 = new Promise(function(resolve, reject) {
-        db.user.find().sort({
-            $natural: -1
-        }).limit(1, (function(err, docs) {
-            if (err) {
-                return reject(err);
-            }
-            resolve(docs);
-        }));
-    });
+    // var dbPromise2 = new Promise(function(resolve, reject) {
+    //     db.user.find().sort({
+    //         $natural: -1
+    //     }).limit(1, (function(err, docs) {
+    //         if (err) {
+    //             return reject(err);
+    //         }
+    //         resolve(docs);
+    //     }));
+    // });
 
 
-    return Promise.all([dbPromise1, dbPromise2])
+    return Promise.all([dbPromise1])
         .then(function(result1) {
             db.close();
             console.log(result1);
             // console.log(result2);
             var applianceObj = result1[0][0];
-
-            var led1 = new five.Led('A0');
-            var led2 = new five.Led('A1');
-            var led3 = new five.Led('A2');
-            led1.off();
-            led2.off();
-            led3.off();
+            console.log(applianceObj);
+            // var led1 = new five.Led('A0');
+            // var led2 = new five.Led('A1');
+            // var led3 = new five.Led('A2');
+            // led1.off();
+            // led2.off();
+            // led3.off();
 
         }).then(function(result) {
             console.log(result);
