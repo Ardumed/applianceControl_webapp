@@ -31,6 +31,10 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
+app.get('/homepage', function(req, res) {
+    res.sendFile(path.join(__dirname + '/homepage.html'));
+});
+
 app.get('/currentstatus', function(req, res) {
     url = 'mongodb://localhost:27017/test'
     db = mongojs(url, ['control']);
@@ -47,19 +51,7 @@ app.post('/setstatus', function(req, res) {
     // console.log(req);
     // res.sendFile(path.join(__dirname + '/simget.html'));
     // var x = true;
-    res.sendFile(path.join(__dirname + '/index.html'));
-});
-
-app.get('/simulation', function(req, res) {
-    res.sendFile(path.join(__dirname + '/simget.html'));
-});
-
-app.post('/simulation', function(req, res) {
-    var reply = {};
-    // reply.date = req.body.date;
-    // reply.time = req.body.time;
-    simulationSave(req);
-    res.sendFile(path.join(__dirname + '/simget.html'));
+    res.sendFile(path.join(__dirname + '/homepage.html'));
 });
 
 var getDetails = function(req) {
@@ -90,37 +82,6 @@ var getDetails = function(req) {
         });
     });
 };
-
-
-var simulationSave = function(req) {
-    var det = {};
-    var x = new Date(req.body.date + ' ' + req.body.time);
-    det.datetime = x;
-
-    var insertDocument = function(db, callback) {
-        db.collection('simulation').insertOne(det, function(err, result) {
-            assert.equal(err, null);
-            console.log(det);
-            console.log("Inserted a document into the control collection.");
-            callback();
-        });
-    };
-
-    return MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        insertDocument(db, function() {
-            db.close();
-        });
-    });
-
-};
-
-/**
- * - POST : set prescription
- * - GET: mainpage : introduction page
- * - GET: day : prescription for that day
- */
-
 
 var port = process.env.PORT || 4000;
 app.listen(port, function() {
