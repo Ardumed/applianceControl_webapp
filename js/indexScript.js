@@ -8,9 +8,9 @@ $(document).ready(function() {
         // $("#submit").trigger("click");
     });
 
-    $('#submit').click(function() {
-        return true;
-    });
+    // $('#submit').click(function() {
+    //     return true;
+    // });
 
     // $.get("currentstatus", function(data) {
     //     //    console.log(data);
@@ -22,18 +22,18 @@ $(document).ready(function() {
     //         }
     //     });
     // });
-    var upd = setTimeout(update, 100);
-    // update();
-
-    function update() {
-        $("input[type=checkbox]").each(function() {
-            //    console.log(this,$(this).is(":checked"));
-            if ($(this).is(":checked"))
-                $(this).parent().parent().parent().parent().addClass("focus-layout-active");
-            else
-                $(this).parent().parent().parent().parent().removeClass("focus-layout-active");
-        });
-    }
+    // var upd = setTimeout(update, 100);
+    // // update();
+    //
+    // function update() {
+    //     $("input[type=checkbox]").each(function() {
+    //         //    console.log(this,$(this).is(":checked"));
+    //         if ($(this).is(":checked"))
+    //             $(this).parent().parent().parent().parent().addClass("focus-layout-active");
+    //         else
+    //             $(this).parent().parent().parent().parent().removeClass("focus-layout-active");
+    //     });
+    // }
 
     function goToByScroll(id) {
         $('html,body').animate({
