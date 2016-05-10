@@ -58,7 +58,7 @@ var continuousDataNotifier = function(i) {
     if (i != 1) {
         return 0;
     }
-    url = 'mongodb://admin:nON6zS3uWa99wtGS@SG-ardumed-7417.servers.mongodirector.com:27017/admin';
+    var url = 'mongodb://localhost:27017/test'
     db = mongojs(url, ['control']);
 
     var dbPromise1 = new Promise(function(resolve, reject) {
