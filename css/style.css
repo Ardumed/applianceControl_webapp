@@ -4929,3 +4929,6 @@ label {
 .switch-wrapper {
   padding-top: 20px;
 }
+.disableDiv {
+  opacity: 0.3;
+}
